@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <title>Password Strength Test</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input { width: 100%; padding: 8px; margin: 10px 0; }
+    .meter { height: 10px; width: 100%; background: #eee; }
+    .fill { height: 100%; width: 0; background: red; transition: width 0.3s; }
+    .feedback { margin-top: 8px; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <h3>Type your password:</h3>
+  <input id='pw' type='password' placeholder='Enter password' oninput='check()'>
+  <div class='meter'><div id='fill' class='fill'></div></div>
+  <div id='fb' class='feedback'></div>
+
+  <script>
+    function check(){
+      const pw = document.getElementById('pw').value;
+      let score = Math.min(4, 
+        (/[a-z]/.test(pw)) + (/[A-Z]/.test(pw)) +
+        (/[0-9]/.test(pw)) + (/[^A-Za-z0-9]/.test(pw)) +
+        (pw.length > 8)
+      );
+      const fill = document.getElementById('fill');
+      const fb = document.getElementById('fb');
+      const colors = ['#e74c3c','#e67e22','#f1c40f','#2ecc71','#3498db'];
+      const msgs = ['Too Weak','Weak','Fair','Strong','Very Strong'];
+      fill.style.width = (score*20)+'%';
+      fill.style.background = colors[score];
+      fb.textContent = msgs[score];
+    }
+  </script>
+</body>
+</html>
